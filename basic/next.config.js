@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/blog",
+  basePath: "/basic",
   experimental: {
     // Next.js will automatically prefix `basePath` to client side links which
     // is useful when all links are relative to the `basePath` of this
