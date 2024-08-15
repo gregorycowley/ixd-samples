@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Pendulum</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      canvas {
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="pendulumCanvas" width="500" height="500"></canvas>
+    <script>
+      const canvas = document.getElementById('pendulumCanvas');
+      const ctx = canvas.getContext('2d');
+
+      let angle = Math.PI / 4;  // Starting angle
+      let angleVelocity = 0.0;
+      const gravity = 0.01;
+
+      const originX = canvas.width / 2;
+      const originY = 100;
+      const length = 300;
+      const ballRadius = 20;
+
+      function drawPendulum() {
+        // Calculate the position of the ball
+        const ballX = originX + length * Math.sin(angle);
+        const ballY = originY + length * Math.cos(angle);
+
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the rod
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(ballX, ballY);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw the ball
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = '#007BFF';
+        ctx.fill();
+        ctx.stroke();
+
+        // Update angle acceleration and velocity
+        const angleAcceleration = (-1 * gravity / length) * Math.sin(angle);
+        angleVelocity += angleAcceleration;
+        angleVelocity *= 0.99;  // Damping
+        angle += angleVelocity;
+      }
+
+      function animate() {
+        drawPendulum();
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+
+</html>
